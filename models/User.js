@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
+const bcrypt = require('bcrypt');
 
 // create our User model 
 class User extends Model {}
@@ -46,6 +47,30 @@ User.init(
         }
     },
     {
+        hooks: {
+                // Replaced by async/await function 
+                // set up beforeCreate lifecycle "hook" functionality
+            // beforeCreate(userData) {
+            //     return bcrypt.hash(userData.password, 10).then(newUserData => {
+            //         return newUserData
+            //     });
+            // }
+
+            async beforeCreate(newUserData) {
+                newUserData.password = await bcrypt.hash(newUserData.password, 10);
+                return newUserData;
+            },
+            // set up beforeUpdate lifecycle "hook" functionality
+            async beforeUpdate(updatedUserData) {
+                updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
+                return updatedUserData;
+
+            // Before we can check to see if this hook is effective however, we must add an option to the query call.
+                // we will need to add the option { individualHooks: true }.
+            // Navigate to the query call in the user-routes.js file for the User.update function in the PUT route to update the password.
+            }
+        },
+
         // TABLE CONFIGURATIONS OPTIONS GO HERE (https://sequelize.org/v5/manual/models-definition.html#configuration))
 
         // pass in our imported sequelize connection (the direct connection to our database)
