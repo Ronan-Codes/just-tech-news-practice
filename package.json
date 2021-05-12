@@ -1,0 +1,27 @@
+{
+  "name": "just-tech-news-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ronan-Codes/just-tech-news-practice.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ronan-Codes/just-tech-news-practice/issues"
+  },
+  "homepage": "https://github.com/Ronan-Codes/just-tech-news-practice#readme",
+  "dependencies": {
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.6.2"
+  }
+}
