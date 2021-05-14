@@ -2,9 +2,9 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 const bcrypt = require('bcrypt');
 
-// create our User model 
+// create our User model
 class User extends Model {
-    // set up method to run on instance data (per user) to check password
+    // set up method to run on instance data (per user) to check password (based on instance of each User)
     checkPassword(loginPW) {
         return bcrypt.compareSync(loginPW, this.password);
     }
@@ -23,17 +23,17 @@ User.init(
             // instruct that this is the Primary Key
             primaryKey: true,
             // turn on auto increment
-            autoIncrement: true 
+            autoIncrement: true
         },
         // define a username column
         username: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        // define an email column 
+        // define an email column
         email: {
             type: DataTypes.STRING,
-            allowNull: false, 
+            allowNull: false,
             // there cannot be any duplicate email values in this table
             unique: true,
             // if allowNull is set to false, we can run our data through data validators before creating the table data
@@ -53,7 +53,7 @@ User.init(
     },
     {
         hooks: {
-                // Replaced by async/await function 
+                // Replaced by async/await function
                 // set up beforeCreate lifecycle "hook" functionality
             // beforeCreate(userData) {
             //     return bcrypt.hash(userData.password, 10).then(newUserData => {
@@ -92,19 +92,19 @@ User.init(
 
 module.exports = User;
 
-// First, we imported the Model class and DataTypes object from Sequelize. This Model class is what we create 
+// First, we imported the Model class and DataTypes object from Sequelize. This Model class is what we create
     // our own models from using the extends keyword so User inherits all of the functionality the Model class has.
-// Once we create the User class, we use the .init() method to initialize the model's data and configuration, 
-    // passing in two objects as arguments. The first object will define the columns and data types for those columns. 
+// Once we create the User class, we use the .init() method to initialize the model's data and configuration,
+    // passing in two objects as arguments. The first object will define the columns and data types for those columns.
     // The second object it accepts configures certain options for the table. Learn more in the Sequelize documents for model configuration
 
-// You can find all of the column settings in the Sequelize model definition documents (Links to an external site.) 
+// You can find all of the column settings in the Sequelize model definition documents (Links to an external site.)
     // and all of the options for DataTypes in the Sequelize DataTypes documents
 
-// If we didn't define the model to have a primaryKey option set up anywhere, Sequelize would create one for us, 
-    // but it's best we explicitly define all of the data. 
+// If we didn't define the model to have a primaryKey option set up anywhere, Sequelize would create one for us,
+    // but it's best we explicitly define all of the data.
 
-// Sequelize's built-in validators are another great feature. We can use them to ensure any email data follows 
-    // the pattern of an email address (i.e., <string>@<string>.<string>) so no one can give us incorrect data. 
-    // There are a lot of prebuilt validators we can use from Sequelize, but you can also make your own, so it's 
+// Sequelize's built-in validators are another great feature. We can use them to ensure any email data follows
+    // the pattern of an email address (i.e., <string>@<string>.<string>) so no one can give us incorrect data.
+    // There are a lot of prebuilt validators we can use from Sequelize, but you can also make your own, so it's
     // worth reading through the documentation to see what's available to you.
