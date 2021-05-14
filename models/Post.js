@@ -54,3 +54,6 @@ Post.init({
 });
 
 module.exports = Post;
+
+// created_at & updated_at need to be manually added in MySQL Terminal (seed),
+//  but not in Sequelize
