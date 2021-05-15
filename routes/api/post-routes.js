@@ -2,7 +2,8 @@ const router = require('express').Router();
 const {
     Post,
     User,
-    Vote
+    Vote,
+    Comment
 } = require('../../models');
 
 // To use Aggregate function for router.put for upvote
@@ -22,10 +23,21 @@ router.get('/', (req, res) => {
             // display data in descending order based on `created_at`
             order: [['created_at', 'DESC']],
             // `include` is equivalent to JOIN statement
-            include: [{
+            include: [
+              // include the Comment model here:
+              {
+                model: Comment,
+                attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+                include: {
+                  model: User,
+                  attributes: ['username']
+                }
+              },
+              {
                 model: User,
                 attributes: ['username']
-            }]
+              }
+            ]
         })
         .then(dbPostData => res.json(dbPostData))
         .catch(err => {
@@ -47,10 +59,20 @@ router.get('/:id', (req, res) => {
               'created_at',
               [sequelize.literal(`(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)`), 'vote_count']
             ],
-            include: [{
+            include: [
+              {
+                model: Comment,
+                attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+                include: {
+                  model: User,
+                  attributes: ['username']
+                }
+              },
+              {
                 model: User,
                 attributes: ['username']
-            }]
+              }
+            ]
         })
         .then(dbPostData => {
             if (!dbPostData) {
