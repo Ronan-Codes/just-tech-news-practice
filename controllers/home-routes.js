@@ -6,6 +6,7 @@ const {
     Comment
 } = require('../models');
 
+// homepage.handlebars to main.handlebars
 router.get('/', (req, res) => {
     Post.findAll({
             attributes: [
@@ -41,7 +42,7 @@ router.get('/', (req, res) => {
         });
 });
 
-// route for login page
+// route for login page. login.handlebars to main.handlebars, and then utilize login.js
 router.get('/login', (req, res) => {
     res.render('login');
 });
