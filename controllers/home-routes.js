@@ -8,6 +8,7 @@ const {
 
 // homepage.handlebars to main.handlebars
 router.get('/', (req, res) => {
+    console.log(req.session);
     Post.findAll({
             attributes: [
                 'id',
@@ -44,6 +45,12 @@ router.get('/', (req, res) => {
 
 // route for login page. login.handlebars to main.handlebars, and then utilize login.js
 router.get('/login', (req, res) => {
+    // check for a session and redirect to the homepage if one exists
+    if(req.session.loggedIn) {
+        res.redirect('/');
+        return;
+    }
+
     res.render('login');
 });
 
