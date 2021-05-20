@@ -38,7 +38,8 @@ router.get('/', (req, res) => {
             // res.render('homepage', dbPostData[0].get({ plain: true }));
             // Add posts array to object instead and continue passing an the object to the template
             res.render('homepage', {
-                posts
+                posts,
+                loggedIn: req.session.loggedIn
             });
         })
         .catch(err => {
@@ -97,9 +98,10 @@ router.get('/posts/:id', (req, res) => {
                 plain: true
             });
 
-            // pass data to template
+            // pass data to template. loggedIn is used to check/render comment textarea in single-post.handlebars
             res.render('single-post', {
-                post
+                post,
+                loggedIn: req.session.loggedIn
             });
         })
         .catch(err => {
