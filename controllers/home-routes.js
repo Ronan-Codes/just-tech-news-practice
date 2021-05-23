@@ -80,7 +80,8 @@ router.get('/post/:id', (req, res) => {
 
       res.render('single-post', {
         post,
-        loggedIn: req.session.loggedIn
+        // why not: req.session.loggedIn
+        loggedIn: true
       });
     })
     .catch(err => {
